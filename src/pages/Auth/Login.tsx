@@ -1,5 +1,9 @@
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Layout from "../../components/layout";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { User, login, authSelector } from "../../features/auth";
 
 interface IFormInput {
     email: string;
@@ -8,8 +12,40 @@ interface IFormInput {
   
 
 export default function Login() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormInput>();
-    const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
+
+    const dispatch = useAppDispatch();
+    const auth = useAppSelector(authSelector);
+
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    const [error, setError] = useState<string | undefined>(undefined);
+
+    const navigateTo = useCallback(async () => {
+        navigate(from, { replace: true });
+    }, [navigate, from])
+
+    useEffect(() => {
+        setLoading(auth.loading);
+        setError(auth.error);
+        setUser(auth.user);
+        if (auth.user) {
+            navigateTo();
+        }
+      }, [auth, navigateTo]);
+
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+    const onSubmit: SubmitHandler<IFormInput> = data => {
+        const payload = {
+          strategy: 'local',
+          ...data,
+        }
+        dispatch(login(payload))
+    };
 
     return (
       <Layout>
@@ -63,10 +99,11 @@ export default function Login() {
   
               <div>
                 <button
+                  disabled={loading}
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  {loading ? 'Loging...' : 'Sign in'}
                 </button>
               </div>
             </form>

@@ -4,6 +4,10 @@ import { api, removeToken, removeUser, setToken, setUser } from '../../utils';
 export const login = createAsyncThunk('auth/login', async (payload) => {
     try {
         const response = await api.post('/authentication', payload);
+<<<<<<< HEAD
+=======
+        console.log('data', response)
+>>>>>>> 93399ba (Integrate login)
         const token = response.data.accessToken;
         const user = response.data.user;
         setToken(token);

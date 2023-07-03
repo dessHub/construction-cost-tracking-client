@@ -6,6 +6,7 @@ import {
 import Home from './pages/Home'
 import ErrorPage from './components/atoms/ErrorPage';
 import Projects from './pages/Projects';
+import { Login } from './pages/Auth'
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
     {
       path: "/projects",
       element: <Projects />
+    },
+    {
+      path: "/login",
+      element: <Login />
     }
   ]);
 

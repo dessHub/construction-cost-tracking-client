@@ -12,7 +12,7 @@ import { authSelector } from "./features/auth";
 import Home from './pages/Home'
 import ErrorPage from './components/atoms/ErrorPage';
 import Projects from './pages/Projects';
-import { Login } from './pages/Auth';
+import { Login, Signup } from './pages/Auth';
 import Profile from './pages/Profile';
 
 function App() {
@@ -49,6 +49,10 @@ function App() {
         <Route
           path='login'
           element={<Login />}
+        />
+        <Route
+          path='signup'
+          element={<Signup />}
         />
         <Route
           path='profile'

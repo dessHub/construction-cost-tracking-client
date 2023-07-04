@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Layout from "../../components/layout";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -110,9 +110,9 @@ export default function Login() {
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Do not have account?{' '}
-              <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              <Link to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                 Register for free here
-              </a>
+              </Link>
             </p>
           </div>
         </>

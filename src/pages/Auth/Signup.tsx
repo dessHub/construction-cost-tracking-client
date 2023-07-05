@@ -1,45 +1,60 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Layout from "../../components/layout";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { User, login, authSelector } from "../../features/auth";
+import { useForm } from "react-hook-form";
+import { InputField } from "../../components/atoms/form/Input";
+import { api } from '../../utils';
 
 interface IFormInput {
     name: string;
     email: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
 }
   
 
 export default function Signup() {
     const navigate = useNavigate();
-    const location = useLocation();
-
-    const from = location.state?.from?.pathname || "/";
-
-    const dispatch = useAppDispatch();
-    const auth = useAppSelector(authSelector);
 
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState<User | null>(null);
+    const [success, setSuccess] = useState<boolean>(false);
     const [error, setError] = useState<string | undefined>(undefined);
 
     const navigateTo = useCallback(async () => {
-        navigate(from, { replace: true });
-    }, [navigate, from])
+        navigate('/login');
+    }, [navigate])
 
     useEffect(() => {
-        setLoading(auth.loading);
-        setError(auth.error);
-        setUser(auth.user);
-      }, [auth, navigateTo]);
+       success && navigateTo()
+      }, [success, navigateTo]);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log('data', data)
+    const confirmPasswordValidation = {
+      required: 'Please confirm your password',
+      validate: (value: string) => value === getValues('password') || 'Passwords do not match'
+    };
+
+    const onSubmit = async (data: IFormInput) => {
+        try {
+          setLoading(true)
+          const _data = {...data}
+          // Remove confirmPassword before sending data
+          delete _data.confirmPassword;
+          const res = await api.post('/users', _data);
+
+          setLoading(false);
+          setSuccess(true);
+          setError(undefined)
+          return res;
+        } catch (error) {
+          let message
+          if (error instanceof Error) message = error.message
+          else message = String(error)
+          // we'll proceed, but let's report it
+          setError(message)
+          setLoading(false)
+        }
     };
 
     return (
@@ -52,69 +67,74 @@ export default function Signup() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            {error && (<div className="py-3">
+              <p className="text-xs text-red-700">{error}</p>
+            </div>)}
+
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                  Full name
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="name"
-                    {...register("name")}
-                    type="text"
-                    required
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    {...register("email")}
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    {...register("password")}
-                    type="password"
-                    required
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-                <div className="mt-2">
-                    <p className="text-sm text-red-700">Password</p>
-                </div>
-              </div>
-  
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                    Confirm Password
-                </label>
-                <div className="mt-2">
-                    <input
-                        id="confirmPassword"
-                        {...register("confirmPassword")}
-                        type="password"
-                        required
-                        className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                </div>
-              </div>
+              <InputField
+                name="name" 
+                label="Full name" 
+                type="text" 
+                register={register}
+                rules={{
+                  required: {
+                    value: true,
+                    message: 'Name is required'
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z ]*$/i,
+                    message: 'Enter a valid name'
+                  }
+                }}
+                error={!!errors.name}
+                errorMessage={errors.name?.message as string}
+              />
+              <InputField
+                name="email" 
+                label="Email address" 
+                type="email" 
+                register={register}
+                rules={{
+                  required: {
+                    value: true,
+                    message: 'Email is required'
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/i,
+                    message: 'Enter a valid email address'
+                  }
+                }}
+                error={!!errors.email}
+                errorMessage={errors.email?.message as string}
+              />
+              <InputField
+                name="password" 
+                label="Password" 
+                type="password" 
+                register={register}
+                rules={{
+                  required: {
+                    value: true,
+                    message: 'Password is required'
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/i,
+                    message: 'Password should have minimum five characters, at least one letter and one number'
+                  }
+                }}
+                error={!!errors.password}
+                errorMessage={errors.password?.message as string}
+              />
+              <InputField
+                name="confirmPassword" 
+                label="Confirm password" 
+                type="password" 
+                register={register}
+                rules={confirmPasswordValidation}
+                error={!!errors.confirmPassword}
+                errorMessage={errors.confirmPassword?.message as string}
+              />
   
               <div>
                 <button

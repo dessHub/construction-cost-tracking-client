@@ -12,11 +12,7 @@ import { authSelector } from "./features/auth";
 import Home from './pages/Home'
 import ErrorPage from './components/atoms/ErrorPage';
 import Projects from './pages/Projects';
-<<<<<<< HEAD
 import { Login, Signup } from './pages/Auth';
-=======
-import { Login } from './pages/Auth';
->>>>>>> 93399ba (Integrate login)
 import Profile from './pages/Profile';
 
 function App() {
@@ -55,13 +51,10 @@ function App() {
           element={<Login />}
         />
         <Route
-<<<<<<< HEAD
           path='signup'
           element={<Signup />}
         />
         <Route
-=======
->>>>>>> 93399ba (Integrate login)
           path='profile'
           element={
             <PrivateRoute>

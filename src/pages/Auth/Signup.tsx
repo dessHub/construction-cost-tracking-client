@@ -1,41 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Layout from "../../components/layout";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { User, login, authSelector } from "../../features/auth";
+import { useForm } from "react-hook-form";
 import { InputField } from "../../components/atoms/form/Input";
+import { api } from '../../utils';
 
 interface IFormInput {
     name: string;
     email: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
 }
   
 
 export default function Signup() {
     const navigate = useNavigate();
-    const location = useLocation();
-
-    const from = location.state?.from?.pathname || "/";
-
-    const dispatch = useAppDispatch();
-    const auth = useAppSelector(authSelector);
 
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState<User | null>(null);
+    const [success, setSuccess] = useState<boolean>(false);
     const [error, setError] = useState<string | undefined>(undefined);
 
     const navigateTo = useCallback(async () => {
-        navigate(from, { replace: true });
-    }, [navigate, from])
+        navigate('/login');
+    }, [navigate])
 
     useEffect(() => {
-        setLoading(auth.loading);
-        setError(auth.error);
-        setUser(auth.user);
-      }, [auth, navigateTo]);
+       success && navigateTo()
+      }, [success, navigateTo]);
 
     const { register, handleSubmit, getValues, formState: { errors } } = useForm<IFormInput>();
 
@@ -44,8 +35,26 @@ export default function Signup() {
       validate: (value: string) => value === getValues('password') || 'Passwords do not match'
     };
 
-    const onSubmit = (data: IFormInput) => {
-        console.log('data', data)
+    const onSubmit = async (data: IFormInput) => {
+        try {
+          setLoading(true)
+          const _data = {...data}
+          // Remove confirmPassword before sending data
+          delete _data.confirmPassword;
+          const res = await api.post('/users', _data);
+
+          setLoading(false);
+          setSuccess(true);
+          setError(undefined)
+          return res;
+        } catch (error) {
+          let message
+          if (error instanceof Error) message = error.message
+          else message = String(error)
+          // we'll proceed, but let's report it
+          setError(message)
+          setLoading(false)
+        }
     };
 
     return (
@@ -58,6 +67,10 @@ export default function Signup() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            {error && (<div className="py-3">
+              <p className="text-xs text-red-700">{error}</p>
+            </div>)}
+
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <InputField
                 name="name" 
@@ -70,7 +83,7 @@ export default function Signup() {
                     message: 'Name is required'
                   },
                   pattern: {
-                    value: /^[A-Za-z]+$/i,
+                    value: /^[a-zA-Z ]*$/i,
                     message: 'Enter a valid name'
                   }
                 }}

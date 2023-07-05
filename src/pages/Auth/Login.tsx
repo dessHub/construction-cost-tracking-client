@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-<<<<<<< HEAD
 import { useNavigate, useLocation, Link } from "react-router-dom";
-=======
-import { useNavigate, useLocation } from "react-router-dom";
->>>>>>> 93399ba (Integrate login)
 import Layout from "../../components/layout";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";

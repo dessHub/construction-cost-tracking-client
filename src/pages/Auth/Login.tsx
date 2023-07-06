@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Layout from "../../components/layout";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { User, login, authSelector } from "../../features/auth";
+import { login, authSelector } from "../../features/auth";
 
 interface IFormInput {
     email: string;
@@ -21,7 +21,6 @@ export default function Login() {
     const auth = useAppSelector(authSelector);
 
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | undefined>(undefined);
 
     const navigateTo = useCallback(async () => {
@@ -31,13 +30,12 @@ export default function Login() {
     useEffect(() => {
         setLoading(auth.loading);
         setError(auth.error);
-        setUser(auth.user);
         if (auth.user) {
             navigateTo();
         }
       }, [auth, navigateTo]);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { register, handleSubmit } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = data => {
         const payload = {
@@ -57,6 +55,13 @@ export default function Login() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+
+            {error && (
+              <div className="py-2 mb-2 text-center" >
+                <p className="text-red-700 text-sm">{error}</p>
+              </div>
+            )}
+
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">

@@ -17,3 +17,7 @@ export const setUser = (val: User) => {
 }
 
 export const getUser = () => localStorage.getItem('user');
+
+export const removeUser = () => {
+    localStorage.removeItem('user');
+}

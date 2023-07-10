@@ -4,7 +4,6 @@ import { RegisterOptions, UseFormRegister } from 'react-hook-form';
 type InputProps = {
   label: string;
   name: string;
-  type: string;
   register: UseFormRegister<any>; // Adjust the type as per your form data structure
   rules?: RegisterOptions;
   error?: boolean;
@@ -12,17 +11,17 @@ type InputProps = {
   autoComplete?: string;
 };
 
-const InputField: FC<InputProps> = ({label, name, type, register, rules, error, errorMessage, ...rest}) => {
+const TextArea: FC<InputProps> = ({label, name, register, rules, error, errorMessage, ...rest}) => {
+
     return (
         <div>
           <label htmlFor={name} className="block text-sm font-medium leading-6 text-gray-900">
             {label}
           </label>
           <div className="mt-2">
-            <input
+            <textarea
               id={name}
               {...register(name, rules)}
-              type={type}
               {...rest}
               className={`block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${error ? 'ring-red-700' : 'ring-gray-300'} placeholder:text-gray-400 focus:none sm:text-sm sm:leading-6`}
             />
@@ -32,4 +31,4 @@ const InputField: FC<InputProps> = ({label, name, type, register, rules, error, 
     )
 }
 
-export default InputField;
+export default TextArea;

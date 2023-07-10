@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Layout from "../../components/layout";
 import { useForm } from "react-hook-form";
-import { InputField } from "../../components/atoms/form/Input";
+import { InputField } from "../../components/atoms/form";
 import { api } from '../../utils';
 
 interface IFormInput {

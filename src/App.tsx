@@ -11,7 +11,7 @@ import { useAppSelector } from "./app/hooks";
 import { authSelector } from "./features/auth";
 import Home from './pages/Home'
 import ErrorPage from './components/atoms/ErrorPage';
-import Projects from './pages/Projects';
+import { ProjectCreate, ProjectDetails, ProjectsList } from './pages/Projects';
 import { Login, Signup } from './pages/Auth';
 import Profile from './pages/Profile';
 
@@ -44,7 +44,17 @@ function App() {
         />
         <Route
           path='projects'
-          element={<Projects />}
+          element={<ProjectsList />}
+        />
+        <Route
+          path='projects/:id'
+          element={<ProjectDetails />}
+        />
+        <Route
+          path='projects/new'
+          element={
+              <ProjectCreate />
+          }
         />
         <Route
           path='login'
@@ -65,6 +75,8 @@ function App() {
       </Route>
     )
   );
+
+  console.log('router', router)
 
   return (
     <>

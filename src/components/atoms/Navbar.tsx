@@ -1,12 +1,12 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import { NavLink } from "react-router-dom"
+import { Bars3Icon, PlusIcon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { NavLink, useMatch } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logout, authSelector } from "../../features/auth";
 
 const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
+  { name: 'Dashboard', href: '/', current: false },
   { name: 'Projects', href: '/projects', current: false },
 ]
 
@@ -69,6 +69,15 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <Disclosure.Button
+                  as="a"
+                  href="/projects/new"
+                  className="flex rounded-md bg-green-800 py-1 px-2 text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                >
+                  <span className="sr-only">Create Project</span>
+                  <PlusIcon className="h-6 w-6" aria-hidden="true" />
+                  <span>Project</span>
+                </Disclosure.Button>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

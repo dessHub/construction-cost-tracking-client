@@ -1,11 +1,5 @@
-import Layout from "../../components/layout"
+import ProjectCreate from "./Create";
+import ProjectsList from "./List";
+import ProjectDetails from "./Details";
 
-const Project = () => {
-    return (
-        <Layout>
-          <div>Project page</div>
-        </Layout>
-    )
-}
-
-export default Project;
+export { ProjectCreate, ProjectDetails, ProjectsList };

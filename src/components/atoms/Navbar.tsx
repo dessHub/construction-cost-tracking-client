@@ -69,15 +69,14 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <Disclosure.Button
-                  as="a"
-                  href="/projects/new"
+                <NavLink
+                  to="/projects/new"
                   className="flex rounded-md bg-green-800 py-1 px-2 text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">Create Project</span>
                   <PlusIcon className="h-6 w-6" aria-hidden="true" />
                   <span>Project</span>
-                </Disclosure.Button>
+                </NavLink>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

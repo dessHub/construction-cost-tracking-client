@@ -5,7 +5,7 @@ type InputProps = {
   label: string;
   name: string;
   type: string;
-  register: UseFormRegister<any>; // Adjust the type as per your form data structure
+  register: UseFormRegister<any>;
   rules?: RegisterOptions;
   error?: boolean;
   errorMessage?: string | undefined;

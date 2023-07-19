@@ -77,37 +77,29 @@ const CreateProject = () => {
                             <>
                             <DescriptionForm register={register} errors={errors} /> 
                             <div className="flex justify-end">
-                               <button type="submit" className="border-2 px-3 py-2 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700">Next</button>
+                               <button type="submit" className="border-2 px-3 py-1 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700">Next</button>
                             </div>
                             </>
                          )}
                         {section === 'uploads' && (
-                            <>
-                                <FileUploads images={images} setImages={setImages}/>
-                                <div className="flex justify-between">
-                                  <button
-                                   className="border-2 px-3 py-2 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700"
-                                   onClick={handleBack}
-                                   >Back</button>
-                                  <button
-                                   className="border-2 px-3 py-2 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700"
-                                   onClick={handleNext}
-                                   >Next</button>
-                                </div>
-                            </> 
+                            <FileUploads images={images} setImages={setImages}/>
                         )}
                         {section === 'preview' && (
+                            <Preview title={formData.title} description={formData.description} images={images} />
+                        )}
+                        {(section === 'uploads' || section === 'preview') && (
                             <>
-                                <Preview title={formData.title} description={formData.description} images={images} />
                                 <div className="flex justify-between">
                                   <button
-                                   className="border-2 px-3 py-2 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700"
+                                   className="border-2 px-3 py-1 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700"
                                    onClick={handleBack}
                                    >Back</button>
                                   <button
-                                   className="border-2 px-3 py-2 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700"
+                                   className="border-2 px-3 py-1 rounded-md bg-slate-800 text-gray-100 hover:bg-green-700"
                                    onClick={handleNext}
-                                   >Submit</button>
+                                   >
+                                    {section === 'uploads' ? 'Next' : 'Submit'}
+                                   </button>
                                 </div>
                             </>
                         )}

@@ -11,9 +11,32 @@ import { useAppSelector } from "./app/hooks";
 import { authSelector } from "./features/auth";
 import Home from './pages/Home'
 import ErrorPage from './components/atoms/ErrorPage';
-import { ProjectCreate, ProjectDetails, ProjectsList } from './pages/Projects';
+import { ProjectCreate, Dashboard, ProjectOverview, ProjectsList } from './pages/Projects';
 import { Login, Signup } from './pages/Auth';
 import Profile from './pages/Profile';
+import {
+    ArcElement,
+    Chart as ChartJS,
+    CategoryScale,
+    Colors,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+
+  // Register chart js
+  ChartJS.register(
+    ArcElement,
+    CategoryScale,
+    Colors,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 
 function App() {
 
@@ -47,8 +70,8 @@ function App() {
           element={<ProjectsList />}
         />
         <Route
-          path='projects/:id'
-          element={<ProjectDetails />}
+          path='project/:id'
+          element={<Dashboard />}
         />
         <Route
           path='projects/new'

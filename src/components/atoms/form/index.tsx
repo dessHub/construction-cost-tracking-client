@@ -1,4 +1,5 @@
 import InputField from "./Input";
 import TextArea from "./TextArea";
+import Select from "./Select";
 
-export { InputField, TextArea }
+export { InputField, Select, TextArea }

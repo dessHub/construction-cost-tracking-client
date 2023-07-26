@@ -19,8 +19,8 @@ const Dashboard = () => {
 
     return (
         <Layout>
-          <div className="flex">
-            <div className="w-auto h-screen bg-slate-100">
+          <div className="flex mt-5">
+            <div className="w-auto h-auto bg-slate-100 shadow-sm rounded-md">
                 {navigation.map(({name, title}) => (
                     <button
                         key={name}
@@ -34,7 +34,7 @@ const Dashboard = () => {
                     </button>
                 ))}
             </div>
-            <div className="flex-1 max-h-screen overflow-x-auto p-2">
+            <div className="flex-1 max-h-screen overflow-x-auto p-2 bg-white">
                 <div className="border-b-2 pb-1 mb-5">
                     <div className="text-2xl font-bold">Project title</div>
                     <div className="flex flex-col sm:flex-row leading-3">

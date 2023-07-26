@@ -39,7 +39,6 @@ const FileUploads: FC<Props> = ({setImages, images}) => {
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            console.log(e.target.files[0])
             onDrop(e.target.files)
         }
     };

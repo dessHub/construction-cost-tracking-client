@@ -26,7 +26,10 @@ import {
     Legend,
   } from 'chart.js';
 
-  // Register chart js
+  /**
+   * Register chart js
+   * This allow to use chart js components in all the components
+   * */
   ChartJS.register(
     ArcElement,
     CategoryScale,
@@ -98,8 +101,6 @@ function App() {
       </Route>
     )
   );
-
-  console.log('router', router)
 
   return (
     <>

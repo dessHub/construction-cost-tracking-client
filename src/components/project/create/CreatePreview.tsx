@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 interface Props {
+<<<<<<< HEAD
     type: string;
     title: string;
     description: string;
@@ -10,23 +11,35 @@ interface Props {
 }
 
 const Preview: FC<Props> = ({type, title, description, size, depth, images}) => {
+=======
+    title: string;
+    description: string;
+    images: string[]
+}
+
+const Preview: FC<Props> = ({title, description, images}) => {
+>>>>>>> 6b07b22f53d2d78da64033e7618c2cc9dd7c1ab3
 
     return  (
         <>
           <div>
             <div className="my-1">
+<<<<<<< HEAD
                 <label className="text-slate-800 text-xs">Project Type</label>
                 <div className="text-sm bg-slate-100 my-3 p-2">
                     {type}
                 </div>
             </div>
             <div className="my-1">
+=======
+>>>>>>> 6b07b22f53d2d78da64033e7618c2cc9dd7c1ab3
                 <label className="text-slate-800 text-xs">Project Title</label>
                 <div className="text-sm bg-slate-100 my-3 p-2">
                     {title}
                 </div>
             </div>
             <div className="my-1">
+<<<<<<< HEAD
                 <label className="text-slate-800 text-xs">Project Size</label>
                 <div className="text-sm bg-slate-100 my-3 p-2">
                     {size} square feet
@@ -39,6 +52,8 @@ const Preview: FC<Props> = ({type, title, description, size, depth, images}) => 
                 </div>
             </div>
             <div className="my-1">
+=======
+>>>>>>> 6b07b22f53d2d78da64033e7618c2cc9dd7c1ab3
                 <label className="text-slate-800 text-xs">Project Description</label>
                 <div className="text-sm bg-slate-100 my-3 p-2">
                     {description}

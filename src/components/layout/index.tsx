@@ -9,7 +9,7 @@ const Layout = ({children}: Props) => {
         <div className="bg-slate-50 w-full min-h-screen relative">
             <Navbar />
 
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-0 sm:px-6 lg:px-8">
                 {children}
             </div>
         </div>

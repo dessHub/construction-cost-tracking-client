@@ -51,9 +51,12 @@ const Dashboard = () => {
                             <span className="text-xs sm:text-sm font-semibold">10th June 2023</span>
                         </div>
                     </div>
-                    <div className="pb-2">
-                        <label className="text-sm font-light mr-1">Total Cost:</label>
-                        <span className="text-sm font-semibold">KES. 40,000</span>
+                    <div className="flex flex-col sm:flex-row space-between">
+                        <div className="pb-2">
+                            <label className="text-sm font-light mr-1">Total Cost:</label>
+                            <span className="text-sm font-semibold">KES. 40,000</span>
+                        </div>
+                        <button className="rounded-sm bg-green-900 text-white text-sm p-2">Add Cost</button>
                     </div>
                 </div>
                 <div>

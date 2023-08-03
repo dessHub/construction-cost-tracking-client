@@ -11,12 +11,14 @@ interface FormData {
     description: string;
     size: number;
     depth?: number;
+    county: string;
+    location?: string;
 }
 
 const CreateProject = () => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [section, setSection] = useState<'description' | 'uploads' | 'preview'>('description');
-    const [formData, setFormData] = useState<FormData>({type: '', title: '', description: '', size: 0})
+    const [formData, setFormData] = useState<FormData>({type: '', title: '', description: '', size: 0, county: ''})
     const [images, setImages] = useState<string[]>([])
 
     const { register, watch, handleSubmit, formState: {errors} } = useForm<FormData>();
@@ -91,7 +93,16 @@ const CreateProject = () => {
                             <FileUploads images={images} setImages={setImages}/>
                         )}
                         {section === 'preview' && (
-                            <Preview type={formData.type} title={formData.title} size={formData.size} depth={formData.depth} description={formData.description} images={images} />
+                            <Preview
+                             type={formData.type} 
+                             title={formData.title} 
+                             size={formData.size} 
+                             depth={formData.depth} 
+                             description={formData.description} 
+                             images={images}
+                             location={formData.location}
+                             county={formData.county}
+                           />
                         )}
                         {(section === 'uploads' || section === 'preview') && (
                             <>

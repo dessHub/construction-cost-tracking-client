@@ -7,13 +7,21 @@ interface Props {
     size: number;
     depth?: number;
     images: string[];
+    county: string;
+    location?: string;
 }
 
-const Preview: FC<Props> = ({type, title, description, size, depth, images}) => {
+const Preview: FC<Props> = ({type, title, description, size, depth, county, location, images}) => {
 
     return  (
         <>
           <div>
+            <div className="my-1">
+                <label className="text-slate-800 text-xs">Project Title</label>
+                <div className="text-sm bg-slate-100 my-3 p-2">
+                    {title}
+                </div>
+            </div>
             <div className="my-1">
                 <label className="text-slate-800 text-xs">Project Type</label>
                 <div className="text-sm bg-slate-100 my-3 p-2">
@@ -21,9 +29,9 @@ const Preview: FC<Props> = ({type, title, description, size, depth, images}) => 
                 </div>
             </div>
             <div className="my-1">
-                <label className="text-slate-800 text-xs">Project Title</label>
+                <label className="text-slate-800 text-xs">Project Location</label>
                 <div className="text-sm bg-slate-100 my-3 p-2">
-                    {title}
+                    {county}, {location}
                 </div>
             </div>
             <div className="my-1">

@@ -30,6 +30,29 @@ const DescriptionForm: FC<InputProps> = ({register, projectType, errors}) => {
         }
     ]
 
+    const counties = [
+        {
+            value: 'Nairobi',
+            label: 'Nairobi'
+        },
+        {
+            value: 'Mombasa',
+            label: 'Mombasa'
+        },
+        {
+            value: 'Kisumu',
+            label: 'Kisumu'
+        },
+        {
+            value: 'Kericho',
+            label: 'Kericho'
+        },
+        {
+            value: 'Bomet',
+            label: 'Bomet'
+        }
+    ]
+
     return (
         <>
             <Select
@@ -79,7 +102,7 @@ const DescriptionForm: FC<InputProps> = ({register, projectType, errors}) => {
                 errorMessage={errors.description?.message as string}
             />
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 sm:gap-2'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-2'>
                 <InputField
                     name="size" 
                     label="Project size (square feet)" 
@@ -105,6 +128,32 @@ const DescriptionForm: FC<InputProps> = ({register, projectType, errors}) => {
                     errorMessage={errors.depth?.message as string}
                   />
                 )}
+            </div>
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-2'>
+                <Select
+                    name="county" 
+                    label="County" 
+                    items={counties} 
+                    register={register}
+                    rules={{
+                        required: {
+                            value: true,
+                            message: 'County is required'
+                        }
+                    }}
+                    error={!!errors.county}
+                    errorMessage={errors.county?.message as string}
+                />
+                <InputField
+                    name="location" 
+                    label="Location" 
+                    type="text" 
+                    register={register}
+                    rules={{}}
+                    error={!!errors.location}
+                    errorMessage={errors.location?.message as string}
+                />
             </div>
         </>
     )
